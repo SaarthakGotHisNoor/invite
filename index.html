@@ -166,6 +166,24 @@
   .event-card{
     background:var(--cream); border-radius:16px; padding:32px 24px; box-shadow:0 10px 26px rgba(140,60,80,.12);
   }
+  /* Haldi event background */
+  .event-card.haldi{
+    position:relative;
+    background-image: url('Haldi.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: #fff;
+    box-shadow: 0 10px 26px rgba(0,0,0,.18);
+  }
+  .event-card.haldi::before{
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(rgba(0,0,0,0.18), rgba(0,0,0,0.18));
+    border-radius: 16px;
+    z-index: 0;
+  }
+  .event-card.haldi *{ position:relative; z-index:1; }
   .event-card h3{ font-size:1.5rem; color:var(--rose); margin:8px 0 6px; font-weight:600; }
   .event-card .tagline{ font-size:.98rem; opacity:.75; margin-bottom:18px; min-height:44px; }
   .event-meta{ display:flex; justify-content:space-around; border-top:1px solid rgba(181,56,77,.15); padding-top:16px; }
@@ -271,7 +289,7 @@
     <p class="eyebrow reveal">❀</p>
     <h2 class="section-title reveal">Events Schedule</h2>
     <div class="events-grid">
-      <div class="event-card reveal">
+      <div class="event-card reveal" >
         <div class="divider">❀</div>
         <h3>The Royal Affair Mehandi</h3>
         <p class="tagline">An evening of henna, music and dance</p>
@@ -281,8 +299,8 @@
           <!-- <div><span class="k">Theme</span>Garden Lawn</div> -->
         </div>
       </div>
-      <div class="event-card reveal">
-        <div class="divider">❀</div>
+      <div class="event-card reveal haldi">
+        <div class="divider"></div>
         <h3>Lilac Manor Haldi</h3>
         <p class="tagline">Turning golden with my forever</p>
         <div class="event-meta">
