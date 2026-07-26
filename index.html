@@ -145,6 +145,19 @@
   .timer .box{ display:flex; flex-direction:column; align-items:center; }
   .timer .num{ font-family:'Playfair Display', serif; font-size:2.4rem; color:var(--rose-deep); background:var(--blush); width:74px; height:74px; border-radius:10px; display:flex; align-items:center; justify-content:center; }
   .timer .label{ font-size:.75rem; letter-spacing:2px; margin-top:8px; opacity:.7; }
+  .scratch-reveal-target{
+    opacity:0;
+    transform:translateY(16px);
+    visibility:hidden;
+    pointer-events:none;
+    transition:opacity .7s ease, transform .7s ease, visibility .7s ease;
+  }
+  .scratch-reveal-target.visible{
+    opacity:1;
+    transform:translateY(0);
+    visibility:visible;
+    pointer-events:auto;
+  }
 
   /* events */
   #events{ background:var(--blush); }
@@ -165,7 +178,7 @@
 
   /* families */
   #families{ background:var(--blush); }
-  .families-grid{ display:flex; gap:60px; flex-wrap:wrap; justify-content:center; margin-top:20px; }
+  .families-grid{ display:flex; gap:60px; flex-wrap:wrap; justify-content:center; margin-top:30px; }
   .family h4{ color:var(--rose-deep); font-size:1.3rem; margin-bottom:10px; font-weight:600; }
   .family p{ font-size:1.05rem; opacity:.85; }
 
@@ -197,6 +210,7 @@
     .timer .num{ width:58px; height:58px; font-size:1.7rem; }
     .timer{ gap:10px; }
   }
+  
 </style>
 </head>
 <body class="locked">
@@ -220,7 +234,7 @@
 
 <main>
   <section id="invocation" style="background-image: url('Slide_fin.png'); background-size: cover; background-position: center; background-repeat: no-repeat;">
-    <p class="blessing reveal">With hearts full of ove &amp; gratitude ,</p>
+    <p class="blessing reveal">With hearts full of love &amp; gratitude ,</p>
     <p class="parents reveal">Mrs. Kanchan &amp; Mr. Rakesh Lakhina</p>
     <p class="blessing reveal">solicits your gracious presence &amp; blessings on the auspicious occasion of wedding ceremony of their daughter</p>
 
@@ -234,7 +248,7 @@
     </div>
   </section>
 
-  <section id="countdown" style="background-image: url('Lotus.jpeg'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+  <section id="countdown" style="background-image: url('https://raw.githubusercontent.com/SaarthakGotHisNoor/invite/refs/heads/main/Lotus.jpeg'); background-size: cover; background-position: center; background-repeat: no-repeat;">
     <p class="eyebrow reveal" style="color: darkred;" >SAVE THE DATE</p>
     <div class="scratch-card reveal">
       <div class="scratch-content">
@@ -245,7 +259,7 @@
       <div class="scratch-hint">✦ SCRATCH TO REVEAL ✦</div>
     </div>
 
-    <div class="timer reveal" id="timer">
+    <div class="timer scratch-reveal-target" id="timerSection">
       <div class="box"><span class="num" id="t-days">00</span><span class="label">DAYS</span></div>
       <div class="box"><span class="num" id="t-hours">00</span><span class="label">HOURS</span></div>
       <div class="box"><span class="num" id="t-mins">00</span><span class="label">MINUTES</span></div>
@@ -303,12 +317,12 @@
   <section id="message" style="background-image: url('4th.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat;" >
     <p class="eyebrow reveal">❀</p>
     <h2 class="section-title reveal">Awaiting Your Noble Presence</h2>
-    <p class="reveal">Because celebrating two souls becoming one deserves all your love, laughter and blessings.</p>
+    <p class="reveal">Because celebrating two souls becoming one deserves all your love, laughter and blessings.</p><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
   </section>
 
-  <section id="families" style="background-image: url('5th.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+  <section id="families" style="background-image: url('https://raw.githubusercontent.com/SaarthakGotHisNoor/invite/refs/heads/main/5th.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat;">
     <p class="eyebrow reveal">WITH LOVE</p>
-    <h2 class="section-title reveal">The Families</h2>
+    <!-- <h2 class="section-title reveal"></h2> -->
     <div class="families-grid">
       <div class="family reveal">
         <h4>Lakhina Family</h4>
@@ -316,11 +330,12 @@
         <p>Sayesha &amp; Sahil Arora </p>
         <p>Sparsh Lakhina</p>
          <p>Taha Arora</p>
+         <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
       </div>
     </div>
   </section>
 
-  <section id="venue" style= "background-image: url(https://raw.githubusercontent.com/coderrohanpahwa/sarthak-noureen-invite/refs/heads/main/1.png);     background-size: cover;
+  <section id="venue" style= "background-image: url(https://raw.githubusercontent.com/SaarthakGotHisNoor/invite/refs/heads/main/1.png);     background-size: cover;
     background-position: center;">
     <p class="eyebrow reveal">VENUE</p>
     <h2 class="section-title reveal">Where We Celebrate</h2>
@@ -358,9 +373,19 @@
   // envelope open
   const envelope = document.getElementById('envelope');
   const cover = document.getElementById('cover');
+  const audio = document.getElementById('bg-audio');
+    let playing = false;
+
+
   envelope.addEventListener('click', () => {
     if(envelope.classList.contains('open')) return;
     envelope.classList.add('open');
+
+    if(!playing){
+      audio.play().catch(() => {});
+      playing = true;
+    }
+
     setTimeout(() => {
       cover.classList.add('hidden');
       document.body.classList.remove('locked');
@@ -430,6 +455,7 @@
       revealed = true;
       canvas.classList.add('done');
       document.querySelector('.scratch-hint').classList.add('done');
+      document.getElementById('timerSection').classList.add('visible');
     }
   }
   function startScratch(evt){ scratching = true; const p = getPos(evt); scratchAt(p.x,p.y); }
@@ -445,8 +471,7 @@
 
   // music toggle
   const musicBtn = document.getElementById('music-toggle');
-  const audio = document.getElementById('bg-audio');
-  let playing = false;
+  // const audio = document.getElementById('bg-audio');
   musicBtn.addEventListener('click', () => {
     if(!playing){
       audio.play().catch(()=>{});
