@@ -136,9 +136,16 @@
     background:linear-gradient(160deg,#fff7f2,#fbe4ea);
   }
   .scratch-content .date{ font-size:1.7rem; color:var(--rose-deep); font-weight:600; }
-  .scratch-canvas{ position:absolute; inset:0; z-index:2; cursor:grab; touch-action:none; user-select:none; }
+  .scratch-canvas{ position:absolute; inset:0; z-index:2; cursor:grab; touch-action:none; user-select:none; display:block; width:100%; height:100%; }
   .scratch-canvas.done{ opacity:0; transition:opacity .8s ease; pointer-events:none; }
-  .scratch-hint{ position:absolute; bottom:10px; left:0; right:0; z-index:3; font-size:.8rem; letter-spacing:2px; color:var(--rose-deep); pointer-events:none; opacity:.7; transition:opacity .8s ease; user-select:none; }
+  .scratch-hint{
+    position:absolute; bottom:10px; left:50%; transform:translateX(-50%); z-index:3;
+    font-size:.8rem; letter-spacing:2px; color:var(--rose-deep);
+    pointer-events:none; opacity:.7; transition:opacity .8s ease; user-select:none;
+    background:linear-gradient(160deg,#fff7f2,#fbe4ea);
+    padding:8px 18px; border-radius:20px; white-space:nowrap;
+    box-shadow:0 4px 10px rgba(140,60,80,.15);
+  }
   .scratch-hint.done{ opacity:0; }
 
   .timer{ display:flex; gap:18px; }
@@ -531,7 +538,7 @@
     let cleared = 0;
     for(let i=3;i<data.length;i+=4*20){ if(data[i] === 0) cleared++; }
     const total = data.length / (4*20);
-    if(cleared/total > 0.45){
+    if(cleared/total > 0.20){
       revealed = true;
       canvas.classList.add('done');
       document.querySelector('.scratch-hint').classList.add('done');
